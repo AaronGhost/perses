@@ -32,7 +32,7 @@ class TestScript(val scriptFile: File, private val scriptTemplate: ScriptFile) {
     val output = Shell.run(
       "${scriptTemplate.shebang}  ${scriptFile.name}",
       scriptFile.parentFile,
-      captureOutput = false,
+      captureOutput = true,
       environment = Shell.CURRENT_ENV
     )
     logger.atFine().log("test script stdout: %s", output.stdout)

@@ -35,6 +35,7 @@ kt_jvm_library(
         ":grammar_facade",
         "//src/org/perses/grammar/c:c_parser_facade",
         "//src/org/perses/grammar/c:pnfc_parser_facade",
+        "//src/org/perses/grammar/glsl:pnfglsl_parser_facade",
         "//src/org/perses/grammar/go:pnfgo_parser_facade",
         "//src/org/perses/grammar/java:java_parser_facade",
         "//src/org/perses/grammar/rust:pnfrust_parser_facade",

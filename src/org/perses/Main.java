@@ -34,6 +34,8 @@ import org.perses.reduction.ReducerFactory;
 import org.perses.reduction.ReductionDriver;
 import org.perses.util.DefaultLoggingConfigurations;
 import org.perses.version.VersionHelper;
+import org.perses.grammar.glsl.LanguageGlsl;
+import org.perses.grammar.glsl.PnfGlslParserFacade;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -103,6 +105,7 @@ public class Main {
     builder.add(LanguageGo.INSTANCE, PnfGoParserFacade::new);
     builder.add(LanguageRust.INSTANCE, PnfRustParserFacade::new);
     builder.add(LanguageScala.INSTANCE, PnfScalaParserFacade::new);
+    builder.add(LanguageGlsl.INSTANCE, PnfGlslParserFacade::new);
     builder.add(LanguageJava.INSTANCE, JavaParserFacade::new);
     builder.add(
         LanguageC.INSTANCE,
