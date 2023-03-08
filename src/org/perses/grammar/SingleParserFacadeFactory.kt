@@ -22,6 +22,8 @@ import org.perses.grammar.c.LanguageC
 import org.perses.grammar.c.PnfCParserFacade
 import org.perses.grammar.cpp.LanguageCpp
 import org.perses.grammar.cpp.PnfCppParserFacade
+import org.perses.grammar.glsl.LanguageGlsl
+import org.perses.grammar.glsl.PnfGlslParserFacade
 import org.perses.grammar.go.LanguageGo
 import org.perses.grammar.go.PnfGoParserFacade
 import org.perses.grammar.java.JavaParserFacade
@@ -103,6 +105,7 @@ class SingleParserFacadeFactory private constructor(
       builder.add(LanguageGo, { PnfGoParserFacade() }, customizer)
       builder.add(LanguageRust, { PnfRustParserFacade() }, customizer)
       builder.add(LanguageScala, { PnfScalaParserFacade() }, customizer)
+      builder.add(LanguageGlsl, {PnfGlslParserFacade()}, customizer)
       builder.add(LanguageJava, { JavaParserFacade() }, customizer)
       builder.add(LanguageC, { PnfCParserFacade() }, customizer)
       builder.add(LanguageSystemVerilog, { PnfSysverilogParserFacade() }, customizer)
