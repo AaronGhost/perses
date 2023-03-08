@@ -16,9 +16,17 @@
  */
 package org.perses.grammar.glsl;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
+import com.google.common.primitives.ImmutableIntArray;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.perses.antlr.ParseTreeWithParser;
 import org.perses.grammar.AbstractDefaultParserFacade;
 
 public final class PnfGlslParserFacade
@@ -26,12 +34,15 @@ public final class PnfGlslParserFacade
 
   public PnfGlslParserFacade() {
     super(
-        LanguageGlsl.INSTANCE,
-        createCombinedAntlrGrammar("PnfGlsl.g4", PnfGlslParserFacade.class));
+            LanguageGlsl.INSTANCE,
+            createCombinedAntlrGrammar("PnfGlsl.g4", PnfGlslParserFacade.class),
+            PnfGlslLexer.class,
+            PnfGlslParser.class,
+            ImmutableIntArray.of(PnfGlslLexer.IDENTIFIER));
   }
 
   @Override
-  protected PnfGlslLexer createLexer(ANTLRInputStream inputStream) {
+  protected PnfGlslLexer createLexer(CharStream inputStream) {
     return new PnfGlslLexer(inputStream);
   }
 
@@ -45,34 +56,33 @@ public final class PnfGlslParserFacade
     return parser.translation_unit();
   }
 
-  /*
-  public ParseTreeWithParser parseWithOrigGlslParser(File file) throws IOException {
-    try (BufferedReader reader = Files.newBufferedReader(file.toPath(), StandardCharsets.UTF_8)) {
-      return parseWithOrigGlslParser(reader, file.getPath());
+  public ParseTreeWithParser parseWithOrigGlslParser(Path file) throws IOException {
+    try (BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
+      return parseWithOrigGlslParser(reader, file.toString());
     }
   }
 
-  public ParseTreeWithParser parseWithOrigGlslParser(String GlslProgram) throws IOException {
-    try (BufferedReader reader = new BufferedReader(new StringReader(GlslProgram))) {
+  public ParseTreeWithParser parseWithOrigGlslParser(String glslProgram) throws IOException {
+    try (BufferedReader reader = new BufferedReader(new StringReader(glslProgram))) {
       return parseWithOrigGlslParser(reader, "<in-memory>");
     }
   }
 
-  public ParseTreeWithParser parseWithOrigGlslParser(String goProgram, String fileName)
-      throws IOException {
-    try (BufferedReader reader = new BufferedReader(new StringReader(goProgram))) {
+  public ParseTreeWithParser parseWithOrigGlslParser(String glslProgram, String fileName)
+          throws IOException {
+    try (BufferedReader reader = new BufferedReader(new StringReader(glslProgram))) {
       return parseWithOrigGlslParser(reader, fileName);
     }
   }
 
   private static ParseTreeWithParser parseWithOrigGlslParser(
-      BufferedReader reader, String fileName) throws IOException {
+          BufferedReader reader, String fileName) throws IOException {
     return parseReader(
-        fileName,
-        reader,
-        antlrInputStream -> new GlslLexer(antlrInputStream),
-        commonTokenStream -> new GlslParser(commonTokenStream),
-            GlslParser::translation_unit);
+            fileName,
+            reader,
+            charStream -> new GLSLLexer(charStream),
+            commonTokenStream -> new GLSLParser(commonTokenStream),
+            GLSLParser::translation_unit);
   }
-   */
 }
+

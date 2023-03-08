@@ -39,7 +39,7 @@ pragma_statement:
    ;
 
 extension_statement_list:
-   | extension_statement_list extension_statement
+   | extension_statement extension_statement_list
    ;
 
 extension_statement:

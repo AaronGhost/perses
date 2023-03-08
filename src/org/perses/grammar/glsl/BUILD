@@ -2,20 +2,20 @@ package(default_visibility = [
     "//visibility:public",
 ])
 
-load("//antlropt/org/perses/antlr/pnf:pnf.bzl", "pnf_convert")
+load("//antlropt/src/org/perses/antlr/pnf:pnf.bzl", "pnf_convert")
 load(
     "//src/org/perses/grammar:antlr_util.bzl",
     "antlr_codegen_combined",
 )
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library")
 
-#antlr_codegen_combined(
-#    name = "orig_glsl_grammar",
-#    grammar_file = "GLSL.g4",
-#    java_pkg_name = "org.perses.grammar.glsl",
-#    lexer_java_file_name = "GlslLexer.java",
-#    parser_java_file_name = "GlslParser.java",
-#)
+antlr_codegen_combined(
+    name = "orig_glsl_grammar",
+    grammar_file = "GLSL.g4",
+    java_pkg_name = "org.perses.grammar.glsl",
+    lexer_java_file_name = "GLSLLexer.java",
+    parser_java_file_name = "GLSLParser.java",
+)
 
 pnf_convert(
     name = "normalize_glsl_to_pnf",
@@ -33,16 +33,17 @@ antlr_codegen_combined(
 )
 
 java_library(
-    name = "pnfglsl_parser_facade",
+    name = "parser_facade",
     srcs = ["PnfGlslParserFacade.java"],
     deps = [
         ":language_kind",
-        #":orig_glsl_grammar",
+        ":orig_glsl_grammar",
         ":pnf_glsl_grammar",
+        "//:flogger",
+        "//:guava",
         "//src/org/perses/antlr:parse_tree_with_parser",
         "//src/org/perses/grammar:grammar_facade",
         "//src/org/perses/program:language_kind",
-        "@maven//:com_google_flogger_flogger",
         "@maven//:org_antlr_antlr4_runtime",
     ],
 )
